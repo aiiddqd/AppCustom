@@ -1,0 +1,1 @@
+<li @if (Route::is('mailboxes.woocommerce'))class="active"@endif><a href="{{ route('mailboxes.woocommerce', ['id'=>$mailbox->id]) }}"><i class="glyphicon glyphicon-shopping-cart"></i> WooCommerce</a></li>

@@ -1,0 +1,24 @@
+{
+    "name": "WooCommerce Integration",
+    "alias": "woocommerce",
+    "description": "View customer WooCommerce sales activity in the Customer Profile pane!",
+    "version": "1.0.2",
+    "detailsUrl": "https://freescout.net/module/woocommerce/",
+    "author": "FreeScout",
+    "authorUrl": "https://freescout.net",
+    "requiredAppVersion": "1.6.6",
+    "license": "AGPL-3.0",
+    "keywords": [],
+    "active": 0,
+    "order": 0,
+    "providers": [
+        "Modules\\WooCommerce\\Providers\\WooCommerceServiceProvider"
+    ],
+    "aliases": {
+        "WooCommerce": "Modules\\WooCommerce\\Providers\\WooCommerceServiceProvider"
+    },
+    "files": [
+        "start.php"
+    ],
+    "requires": []
+}

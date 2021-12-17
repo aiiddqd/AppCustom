@@ -1,0 +1,21 @@
+#wc-loader {
+	display: none;
+	margin-top: 10px;
+	margin-bottom: 5px;
+	text-align: center;
+}
+.wc-loading #wc-loader {
+	display: block;
+} 
+.wc-loading .wc-refresh,
+.wc-loading .wc-orders-list,
+.wc-loading .wc-no-orders {
+	display: none;
+}
+
+.wc-orders-list li {
+	margin-top: 3px;
+	margin-bottom: 3px;
+	padding-bottom: 3px;
+	border-bottom: 1px solid #E3E8EB;
+}

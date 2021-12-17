@@ -1,0 +1,25 @@
+{
+    "name": "freescout/woocommerce",
+    "description": "",
+    "authors": [
+        {
+            "name": "FreeScout",
+            "email": "support@freescout.net"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Modules\\WooCommerce\\Providers\\WooCommerceServiceProvider"
+            ],
+            "aliases": {
+                
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\WooCommerce\\": ""
+        }
+    }
+}
