@@ -33,6 +33,33 @@ class QuickClosingServiceProvider extends ServiceProvider
      */
     public function hooks()
     {
+        \Eventy::addAction('bulk_actions.before_delete', function($mailbox) {
+            if (!$mailbox) {
+                // return;
+            }
+            // $workflows = Workflow::where('mailbox_id', $mailbox->id)
+            //     ->where('active', true)
+            //     ->where('type', Workflow::TYPE_MANUAL)
+            //     ->orderBy('sort_order')
+            //     ->get();
+            // if (!$workflows) {
+            //     return;
+            // }
+            ?>
+            <button type="button" class="btn btn-default conv-close" title="Close">
+                <span class="glyphicon glyphicon-ok"></span>
+            </button>
+            <?php   
+        }, 50, 1);
+
+        \Eventy::addAction('conversation.action_buttons', function($conversation, $mailbox) {
+            ?>
+            <button type="button" class="btn btn-default conv-close" title="Close">
+                <span class="glyphicon glyphicon-ok"></span>
+            </button>
+            <?php   
+        }, 20, 2);
+
         
     }
 
