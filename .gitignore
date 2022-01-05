@@ -1,14 +1,12 @@
-/*
+*
 !Modules
 !.gitignore
-!.LICENSE
-!.README
-
-
-# ignore node dependency directories
-node_modules/
+!README.md
 
 # ignore log files and databases
 *.log
 *.sql
 *.sqlite
+
+!*/
+!/resources/lang/ru.json

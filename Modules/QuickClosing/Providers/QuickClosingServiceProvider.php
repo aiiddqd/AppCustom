@@ -35,28 +35,20 @@ class QuickClosingServiceProvider extends ServiceProvider
     {
         \Eventy::addAction('bulk_actions.before_delete', function($mailbox) {
             if (!$mailbox) {
-                // return;
+                return;
             }
-            // $workflows = Workflow::where('mailbox_id', $mailbox->id)
-            //     ->where('active', true)
-            //     ->where('type', Workflow::TYPE_MANUAL)
-            //     ->orderBy('sort_order')
-            //     ->get();
-            // if (!$workflows) {
-            //     return;
-            // }
+
             ?>
-            <button type="button" class="btn btn-default conv-close" title="Close">
+            <button type="button" class="btn btn-default conv-close" title="Close" data-status="3">
                 <span class="glyphicon glyphicon-ok"></span>
             </button>
+
             <?php   
         }, 50, 1);
 
         \Eventy::addAction('conversation.action_buttons', function($conversation, $mailbox) {
             ?>
-            <button type="button" class="btn btn-default conv-close" title="Close">
-                <span class="glyphicon glyphicon-ok"></span>
-            </button>
+            <span class="hidden-xs conv-action glyphicon glyphicon-ok conv-close" data-toggle="tooltip" data-status="3" data-placement="bottom" title="" aria-label="Close" role="button" data-original-title="Close"></span>
             <?php   
         }, 20, 2);
 
