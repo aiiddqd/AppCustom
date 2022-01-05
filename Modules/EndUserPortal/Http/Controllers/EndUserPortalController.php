@@ -543,6 +543,13 @@ class EndUserPortalController extends Controller
         // save() will check if something in the model has changed. If it hasn't it won't run a db query.
         $conversation->save();
 
+        // Custom fields.
+        if (\Module::isActive('customfields') && !empty($request->cf)) {
+            foreach ($request->cf as $custom_field_id => $custom_field_value) {
+                \CustomField::setValue($conversation->id, $custom_field_id, $custom_field_value);
+            }
+        }
+
         // Update folders counters
         $conversation->mailbox->updateFoldersCounters();
 

@@ -106,7 +106,21 @@
                     </select>
                 </div>
             </div>
-            
+
+            @if (\Module::isActive('customfields'))
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{{ __("Custom Fields") }}</label>
+
+                    <div class="col-sm-8">
+                        @foreach(\CustomField::getMailboxCustomFields($mailbox->id) as $custom_field)
+                            <label class="checkbox checkbox-inline" for="cf_{{ $custom_field->id }}">
+                                <input type="checkbox" name="cf[]" value="{{ $custom_field->id }}" id="cf_{{ $custom_field->id }}" @if (!empty($widget_settings['cf']) && in_array($custom_field->id, $widget_settings['cf'])) checked @endif> {{ $custom_field->name }}
+                            </label>
+                        @endforeach
+                    </div>
+                </div>
+            @endif
+
             <div class="form-group @if (empty($widget_settings)) hidden @endif" id="eup-widget-code-wrapper">
 
                 <div class="col-sm-6 col-sm-offset-2">

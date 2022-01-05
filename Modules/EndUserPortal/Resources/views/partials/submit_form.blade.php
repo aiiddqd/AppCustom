@@ -54,6 +54,57 @@
                 </div>
             @endif
 
+            @if (\Module::isActive('customfields'))
+                @php
+                    if (empty($mailbox_id)) {
+                        $mailbox_id = \EndUserPortal::decodeMailboxId($mailbox->id, \EndUserPortal::WIDGET_SALT);
+                    }
+                    
+                    // We do not check request string as:
+                    // - Submit another ticket button does not work in this case
+                    // - In the Portal there is not request parameters.
+                    // $cf = Request::get('cf');
+                    // if (empty($cf) || !is_array($cf)) {
+                    $widget_settings = \EndUserPortal::getWidgetSettings($mailbox_id);
+                    $cf = $widget_settings['cf'] ?? [];
+                    //}
+                @endphp
+                @if (!empty($cf) && is_array($cf))
+                    @php
+                        $custom_fields = \CustomField::getMailboxCustomFields($mailbox_id);
+                        $add_calendar = false;
+                    @endphp
+                    @foreach($cf as $custom_field_id)
+                        @foreach($custom_fields as $custom_field)
+                            @if ($custom_field->id == $custom_field_id)
+                                @if ($custom_field->type == CustomField::TYPE_DATE) @php $add_calendar = true @endphp @endif
+                                <div class="form-group">
+                                    @if ($custom_field->type == CustomField::TYPE_DROPDOWN)
+                                        <select class="form-control eup-remember" name="cf[{{ $custom_field->id }}]" required>
+                                            <option value="">{{ $custom_field->name }}*</option>
+                                            
+                                            @if (is_array($custom_field->options))
+                                                @foreach($custom_field->options as $option_key => $option_name)
+                                                    <option value="{{ $option_key }}">{{ $option_name }}</option>
+                                                @endforeach
+                                            @endif
+                                        </select>
+                                    @else
+                                        <input name="cf[{{ $custom_field->id }}]" class="form-control eup-remember @if ($custom_field->type == CustomField::TYPE_DATE) eup-type-date @endif" value="" placeholder="{{ $custom_field->name }}*" required 
+                                            @if ($custom_field->type == CustomField::TYPE_NUMBER)
+                                                type="number"
+                                            @else
+                                                type="text"
+                                            @endif
+                                        />
+                                    @endif
+                                </div>
+                            @endif
+                        @endforeach
+                    @endforeach
+                @endif
+            @endif
+
             <div class="form-group{{ $errors->has('message') ? ' has-error' : '' }}">
 
                 <textarea class="form-control eup-remember" name="message" rows="13" placeholder="{{ __('Message') }}*" required autofocus>{{ old('message') }}</textarea>
@@ -80,4 +131,17 @@
         </div>
 
     </form>
+
+    @if (!empty($add_calendar))
+
+        @section('eup_stylesheets')
+            @parent
+            <link href="{{ asset('js/flatpickr/flatpickr.min.css') }}" rel="stylesheet">
+        @endsection
+
+        @section('eup_javascripts')
+            @parent
+            {!! Minify::javascript(['/js/flatpickr/flatpickr.min.js', '/js/flatpickr/l10n/'.strtolower(Config::get('app.locale')).'.js']) !!}
+        @endsection
+    @endif
 @endif

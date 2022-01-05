@@ -54,6 +54,10 @@ function eupInitSubmit()
 		$('#eup-ticket-form').on('submit', function(e) {
 			$(this).children().find('.eup-btn-ticket-submit:first').button('loading');
 		});
+
+		if (typeof($.fn.flatpickr) != "undefined") {
+			$('.eup-type-date').flatpickr({allowInput: true});
+		}
 	});
 }
 

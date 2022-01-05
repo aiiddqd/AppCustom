@@ -17,7 +17,7 @@
 					<div class="row">
 						<div class="col-xs-12">
 							
-							@include('enduserportal::partials/submit_form')
+							@include('enduserportal::partials/submit_form', ['mailbox_id' => $mailbox->id])
 
 						</div>
 					</div>

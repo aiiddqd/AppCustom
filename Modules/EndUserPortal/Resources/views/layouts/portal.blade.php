@@ -32,6 +32,8 @@
 	    @endphp
 	    
 	    @yield('stylesheets')
+
+	    @yield('eup_stylesheets')
 	</head>
     <body @yield('body_attrs')>
     	<div id="app">
@@ -114,6 +116,7 @@
 	            \Helper::logException($e);
 	        }
 	    @endphp
+	    @yield('eup_javascripts')
 	    <script type="text/javascript">
 	        @yield('eup_javascript')
 	    </script>
