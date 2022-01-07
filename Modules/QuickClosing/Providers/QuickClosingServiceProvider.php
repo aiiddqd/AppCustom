@@ -5,6 +5,9 @@ namespace Modules\QuickClosing\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
 
+
+define('QC_MODULE', 'quickclosing');
+
 class QuickClosingServiceProvider extends ServiceProvider
 {
     /**
@@ -46,6 +49,13 @@ class QuickClosingServiceProvider extends ServiceProvider
         <?php
         }, 50, 1);
 
+
+        \Eventy::addFilter('javascripts', function($javascripts) {
+            // $javascripts[] = \Module::getPublicPath(QC_MODULE).'/js/module.js';
+            return $javascripts;
+        });
+
+
         \Eventy::addAction('conversation.action_buttons', function ($conversation, $mailbox) {
         ?>
             <span class="hidden-xs conv-action glyphicon glyphicon-ok app-conv-close" data-toggle="tooltip" data-status="3" data-placement="bottom" title="" aria-label="Close" role="button" data-original-title="Close"></span>
@@ -53,13 +63,34 @@ class QuickClosingServiceProvider extends ServiceProvider
                 document.addEventListener('DOMContentLoaded', function() {
                     var btn = document.querySelector('.app-conv-close');
 
-                    btn.addEventListener('click', function() {
-                        var url = "https://hd.bizio.site/conversation/ajax?folder_id=37";
+                    async function submit() {
+                        let url = 'https://hd.bizio.site/conversation/ajax?folder_id=37'; 
                         const formData = new FormData();
                         formData.append('action', 'conversation_change_status');
                         formData.append('status', '3');
                         formData.append('conversation_id', '7766');
                         formData.append('folder_id', '37');
+
+                        let options = {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json;charset=utf-8'
+                            },
+                            body: formData
+                        }
+                        let response = await fetch(url, options); // завершается с заголовками ответа
+                        let result = await response.json(); // читать тело ответа в формате JSON
+                        console.log(result);
+                    }
+
+                    btn.addEventListener('click', function() {
+                        // submit();
+                        // var url = "https://hd.bizio.site/conversation/ajax?folder_id=37";
+                        // const formData = new FormData();
+                        // formData.append('action', 'conversation_change_status');
+                        // formData.append('status', '3');
+                        // formData.append('conversation_id', '7766');
+                        // formData.append('folder_id', '37');
 
                         // let response = fetch(url, {
                         //     method: 'POST',
