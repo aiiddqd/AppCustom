@@ -1,17 +1,44 @@
 <script>
     export let ajaxUrl = "#";
     let href = "https://hd.bizio.site/";
-	let count = 0;
+    let count = 0;
+    $: console.log("значение count равно " + count);
 
-	function closeConversation() {
-		count += 1;
-		alert(count);
-	}
+    async function getAjax() {
+		const options = {
+			// 'mode': 'no-cors'
+		};
+
+        const response = await fetch(
+            "https://bizzapps.ru/wp-json",
+			options
+        );
+        const json = await response.json();
+
+		if (response.ok) {
+            return json;
+        } else {
+            throw new Error(json);
+        }
+    }
+
+	let siteName = '';
+
+    function handleClick() {
+        count += 1;
+		siteName = 'обновление...';
+		getAjax()
+		.then((data) => {
+				console.log(data);
+				siteName = data.name;
+			}
+		);
+    }
 </script>
 
-<main>
+<section>
     <div class="conv-close-action">
-        <button type="button" on:click={closeConversation}>
+        <button type="button" on:click={handleClick}>
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
@@ -29,43 +56,31 @@
             </svg>
         </button>
     </div>
-    <p>test app: <a {href} target="_blank">{href}</a></p>
-    <p>ajax url: {ajaxUrl}</p>
-</main>
+</section>
+<p>test app: <a {href} target="_blank">{href}</a></p>
+<p>ajax url: {ajaxUrl}</p>
+<p>siteName: {siteName}</p>
+
 
 <style>
     button {
         display: inline-block;
-        font-weight: 400;
-        line-height: 1.5;
-        color: #212529;
-        text-align: center;
-        text-decoration: none;
-        vertical-align: middle;
-        color: #fff;
-        background-color: #6c757d;
-        border-color: #6c757d;
+        line-height: 0;
         cursor: pointer;
-        border: 1px solid transparent;
-        padding: 0.375rem 0.75rem;
+        border: none;
+        padding: 1rem;
         font-size: 1rem;
         border-radius: 0.25rem;
+        margin: 0rem;
         transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
             border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
     }
 
-    main {
-        text-align: center;
-        padding: 1em;
+    section {
+        padding: 1rem;
+        border-radius: 0.3rem;
         max-width: 240px;
         margin: 0 auto;
-    }
-
-  
-
-    @media (min-width: 640px) {
-        main {
-            max-width: none;
-        }
+        box-shadow: 0px 0px 1rem #0000002b;
     }
 </style>
