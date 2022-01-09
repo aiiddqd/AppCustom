@@ -1,12 +1,17 @@
 <script>
     export let ajaxUrl = "#";
     let href = "https://hd.bizio.site/";
+	let count = 0;
+
+	function closeConversation() {
+		count += 1;
+		alert(count);
+	}
 </script>
 
 <main>
-	<h1>Dev app</h1>
     <div class="conv-close-action">
-        <button type="button">
+        <button type="button" on:click={closeConversation}>
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
@@ -56,12 +61,7 @@
         margin: 0 auto;
     }
 
-    h1 {
-        color: #ff3e00;
-        text-transform: uppercase;
-        font-size: 4em;
-        font-weight: 100;
-    }
+  
 
     @media (min-width: 640px) {
         main {
