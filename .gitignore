@@ -1,12 +1,8 @@
 *
-!Modules
+
 !.gitignore
 !README.md
-
-# ignore log files and databases
-*.log
-*.sql
-*.sqlite
+!resources/lang/ru.json
+!Modules/**
 
 !*/
-!/resources/lang/ru.json
