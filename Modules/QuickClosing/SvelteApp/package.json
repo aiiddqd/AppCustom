@@ -4,6 +4,8 @@
   "private": true,
   "scripts": {
     "build": "rollup -c",
+    "copy": "cp public/build/bundle.js ../Public/bundle.js && cp public/build/bundle.css ../Public/bundle.css",
+    "up": "npm run build && npm run copy",
     "dev": "rollup -c -w",
     "start": "sirv public --no-clear"
   },

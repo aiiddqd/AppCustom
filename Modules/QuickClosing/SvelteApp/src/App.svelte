@@ -1,68 +1,85 @@
 <script>
-    export let ajaxUrl = "#";
-    let href = "https://hd.bizio.site/";
-    let count = 0;
-    $: console.log("значение count равно " + count);
+	import { onMount } from 'svelte';
+	import { isLocal, dd, remoteRequest } from './helper.js';
 
-    async function getAjax() {
-		const options = {
-			// 'mode': 'no-cors'
-		};
+    let baseUrl =  new URL('https://hd.bizio.site/conversation/ajax');
+    let context = {
+        isLocal: true,
+        conversation_id: 8791,
+        folder_id: 37,
+    }
+    
+    $: {
+        dd(context)
+    }
 
-        const response = await fetch(
-            "https://bizzapps.ru/wp-json",
-			options
-        );
-        const json = await response.json();
+    onMount(() => {
+        if( ! isLocal() ){
+            setContext()
+        }
+    })
 
-		if (response.ok) {
-            return json;
-        } else {
-            throw new Error(json);
+    function setContext(){
+        context = {
+            isLocal: false,
+            conversation_id: getGlobalAttr('conversation_id'),
+            folder_id: getQueryParam('folder_id'),
         }
     }
 
-	let siteName = '';
 
     function handleClick() {
-        count += 1;
-		siteName = 'обновление...';
-		getAjax()
-		.then((data) => {
+
+        let data = new FormData();
+        data.append('action', 'conversation_change_status');
+        data.append('status', 3);
+        data.append('conversation_id', context.conversation_id);
+        data.append('folder_id', context.folder_id);
+
+
+        let args = {
+            method: 'POST',
+            body: data,
+        }
+
+
+        baseUrl.searchParams.append('folder_id', context.folder_id);
+
+        let url = baseUrl.toString();
+
+        
+        dd(args)
+        dd(url)
+
+
+        // return;
+
+        remoteRequest( url, args ).then((data) => {
 				console.log(data);
-				siteName = data.name;
-			}
-		);
+        })
     }
 </script>
 
-<section>
+<section class="app-toolbox-wrapper">
     <div class="conv-close-action">
         <button type="button" on:click={handleClick}>
-            <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                fill="currentColor"
-                class="bi bi-check-square"
-                viewBox="0 0 16 16"
-            >
-                <path
-                    d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"
-                />
-                <path
-                    d="M10.97 4.97a.75.75 0 0 1 1.071 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.235.235 0 0 1 .02-.022z"
-                />
-            </svg>
+            <i class="glyphicon glyphicon-ok-circle"></i>
         </button>
     </div>
 </section>
-<p>test app: <a {href} target="_blank">{href}</a></p>
-<p>ajax url: {ajaxUrl}</p>
-<p>siteName: {siteName}</p>
-
 
 <style>
+    .app-toolbox-wrapper {
+        margin-top: 3rem;
+
+    }
+
+    .conv-close-action {
+        box-shadow: 0px 0px 1rem #0000002b;
+        border-radius: 0.3rem;
+
+    }
+
     button {
         display: inline-block;
         line-height: 0;
@@ -76,11 +93,4 @@
             border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
     }
 
-    section {
-        padding: 1rem;
-        border-radius: 0.3rem;
-        max-width: 240px;
-        margin: 0 auto;
-        box-shadow: 0px 0px 1rem #0000002b;
-    }
 </style>
