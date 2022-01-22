@@ -1,4 +1,4 @@
-# helpdesk-freescout
+# toolbox module for FreeScout
 
 
-ssh uptimizt@uptimizt.beget.tech
+https://github.com/freescout-helpdesk/freescout
