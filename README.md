@@ -1,4 +1,2 @@
-# toolbox module for FreeScout
-
-
-https://github.com/freescout-helpdesk/freescout
+- toolbox module for FreeScout https://github.com/freescout-helpdesk/freescout
+- russian local
