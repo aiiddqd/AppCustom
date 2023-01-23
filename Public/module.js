@@ -1,5 +1,30 @@
 $(document).ready(function () {
 
+    $('.check-email').click(function (e) {
+        e.preventDefault();
+        var urlAjax = Vars.public_url + '/system/tools';
+
+        fsAjax(
+            {
+                action: 'fetch_emails',
+                days: 1,
+                unseen: 1,
+            },
+            urlAjax,
+            function (response) {
+                console.log(response);
+                loaderHide();
+            },
+            false,
+            function (response) {
+                console.log(response);
+                loaderHide();
+            },
+
+        );
+
+    });
+
     $('.conv-close').click(function (e) {
         fsAjax(
             {

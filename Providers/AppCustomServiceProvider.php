@@ -11,10 +11,13 @@ class AppCustomServiceProvider extends ServiceProvider
     }
 
     public function hooks(){
-        \Eventy::addAction('menu.append', function() {
+        \Eventy::addAction('menu.append', function () {
             echo '
             <li class="nav-link">
-                <a href="https://m.ddev.app/system/cron/cdb831cab0ae630b541de8c0ddd34d15" target="_blank">Check mail</a>
+                <a href="#" class="check-email">Check mail</a>
+            </li>
+            <li class="nav-link">
+                <a href="https://m.ddev.app/system/cron/cdb831cab0ae630b541de8c0ddd34d15" target="_blank" class="check-email">Cron start</a>
             </li>
             ';
 
