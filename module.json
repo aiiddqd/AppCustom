@@ -1,0 +1,22 @@
+{
+    "name": "AppCustom",
+    "alias": "appcustom",
+    "description": "",
+    "version": "1.0.1",
+    "detailsUrl": "",
+    "author": "",
+    "authorUrl": "",
+    "requiredAppVersion": "1.0.2",
+    "license": "MIT",
+    "keywords": [],
+    "active": 0,
+    "order": 0,
+    "providers": [
+        "Modules\\AppCustom\\Providers\\AppCustomServiceProvider"
+    ],
+    "aliases": {},
+    "files": [
+        "start.php"
+    ],
+    "requires": []
+}
