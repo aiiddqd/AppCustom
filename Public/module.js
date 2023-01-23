@@ -47,7 +47,9 @@ $(document).ready(function () {
                     showFloatingAlert('error', Lang.get("messages.error_occured"));
                 }
                 loaderHide();
-            });
+            },
+            true
+        );
     });
 
 

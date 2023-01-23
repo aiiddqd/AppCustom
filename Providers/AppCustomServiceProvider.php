@@ -12,14 +12,15 @@ class AppCustomServiceProvider extends ServiceProvider
 
     public function hooks(){
         \Eventy::addAction('menu.append', function () {
-            echo '
+            $cron_url = route('system.cron', ['hash' => \Helper::getWebCronHash()]);
+            printf( '
             <li class="nav-link">
                 <a href="#" class="check-email">Check mail</a>
             </li>
             <li class="nav-link">
-                <a href="https://m.ddev.app/system/cron/cdb831cab0ae630b541de8c0ddd34d15" target="_blank" class="check-email">Cron start</a>
+                <a href="%s" target="_blank" class="cron-start">Cron start</a>
             </li>
-            ';
+            ', $cron_url);
 
         }, 20, 2);
 
